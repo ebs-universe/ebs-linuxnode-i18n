@@ -8,13 +8,12 @@ from ebs.linuxnode.core.config import ConfigMixin
 from ebs.linuxnode.core.log import NodeLoggingMixin
 
 
-class AdvancedTextMixin(NodeLoggingMixin, ConfigMixin, BaseMixin):
+class i18nMixin(NodeLoggingMixin, ConfigMixin, BaseMixin):
     _supported_languages = ['en_US']
 
     def __init__(self, *args, **kwargs):
-        super(AdvancedTextMixin, self).__init__(*args, **kwargs)
-        self._i18n = TranslationManager(self.i18n_supported_languages,
-                                        self._i18n_catalog_dirs)
+        super(i18nMixin, self).__init__(*args, **kwargs)
+        self._i18n = None
 
     @property
     def _i18n_catalog_dirs(self):
@@ -35,5 +34,7 @@ class AdvancedTextMixin(NodeLoggingMixin, ConfigMixin, BaseMixin):
         return self._i18n
 
     def install(self):
-        super(AdvancedTextMixin, self).install()
+        super(i18nMixin, self).install()
+        self._i18n = TranslationManager(self.i18n_supported_languages,
+                                        self._i18n_catalog_dirs)
         self._i18n.install()
