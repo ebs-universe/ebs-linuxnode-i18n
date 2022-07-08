@@ -35,6 +35,9 @@ class i18nMixin(NodeLoggingMixin, ConfigMixin, BaseMixin):
 
     def install(self):
         super(i18nMixin, self).install()
+        self.log.debug("Using i18n Catalog Directories : ")
+        for d in self._i18n_catalog_dirs:
+            self.log.debug(' {}'.format(d))
         self._i18n = TranslationManager(self.i18n_supported_languages,
                                         self._i18n_catalog_dirs)
         self._i18n.install()
